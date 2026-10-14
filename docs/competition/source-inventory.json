@@ -42,8 +42,8 @@
     },
     {
       "file": "framing.mbt",
-      "physical": 126,
-      "nonblank_noncomment": 109
+      "physical": 129,
+      "nonblank_noncomment": 112
     },
     {
       "file": "matrix.mbt",
@@ -77,8 +77,8 @@
     },
     {
       "file": "symbols.mbt",
-      "physical": 140,
-      "nonblank_noncomment": 112
+      "physical": 143,
+      "nonblank_noncomment": 115
     },
     {
       "file": "text.mbt",
@@ -96,6 +96,6 @@
       "nonblank_noncomment": 87
     }
   ],
-  "physical": 2108,
-  "nonblank_noncomment": 1746
+  "physical": 2114,
+  "nonblank_noncomment": 1752
 }

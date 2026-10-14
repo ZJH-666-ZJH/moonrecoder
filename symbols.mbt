@@ -1,12 +1,12 @@
 ///|
 // Immutable-by-API byte symbols. All accessors return detached copies.
 pub struct Symbols {
-  values : Array[Int]
+  values : Array[Int32]
 }
 
 ///|
-fn copy_values(values : Array[Int]) -> Array[Int] {
-  let out : Array[Int] = []
+fn copy_values(values : Array[Int32]) -> Array[Int32] {
+  let out : Array[Int32] = []
   for value in values {
     out.push(value)
   }
@@ -14,7 +14,7 @@ fn copy_values(values : Array[Int]) -> Array[Int] {
 }
 
 ///|
-pub fn Symbols::new(values : Array[Int]) -> Symbols raise CodeError {
+pub fn Symbols::new(values : Array[Int32]) -> Symbols raise CodeError {
   if values.length() > 262144 {
     raise Limit("symbol vector exceeds 262144 bytes")
   }
@@ -25,7 +25,7 @@ pub fn Symbols::new(values : Array[Int]) -> Symbols raise CodeError {
 }
 
 ///|
-pub fn Symbols::zeros(length : Int) -> Symbols raise CodeError {
+pub fn Symbols::zeros(length : Int32) -> Symbols raise CodeError {
   if length < 0 || length > 262144 {
     raise Limit("invalid symbol vector length")
   }
@@ -33,17 +33,17 @@ pub fn Symbols::zeros(length : Int) -> Symbols raise CodeError {
 }
 
 ///|
-pub fn Symbols::length(self : Symbols) -> Int {
+pub fn Symbols::length(self : Symbols) -> Int32 {
   self.values.length()
 }
 
 ///|
-pub fn Symbols::to_array(self : Symbols) -> Array[Int] {
+pub fn Symbols::to_array(self : Symbols) -> Array[Int32] {
   copy_values(self.values)
 }
 
 ///|
-pub fn Symbols::at(self : Symbols, index : Int) -> Int raise CodeError {
+pub fn Symbols::at(self : Symbols, index : Int32) -> Int32 raise CodeError {
   if index < 0 || index >= self.length() {
     raise Invalid("symbol index out of range")
   }
@@ -74,7 +74,10 @@ pub fn Symbols::equal(self : Symbols, other : Symbols) -> Bool {
 }
 
 ///|
-pub fn Symbols::scale(self : Symbols, factor : Int) -> Symbols raise CodeError {
+pub fn Symbols::scale(
+  self : Symbols,
+  factor : Int32,
+) -> Symbols raise CodeError {
   check_symbol(factor)
   { values: self.values.map(v => mul(v, factor)), }
 }
@@ -82,7 +85,7 @@ pub fn Symbols::scale(self : Symbols, factor : Int) -> Symbols raise CodeError {
 ///|
 pub fn Symbols::axpy(
   self : Symbols,
-  factor : Int,
+  factor : Int32,
   other : Symbols,
 ) -> Symbols raise CodeError {
   check_symbol(factor)
@@ -97,7 +100,7 @@ pub fn Symbols::axpy(
 }
 
 ///|
-pub fn Symbols::dot(self : Symbols, other : Symbols) -> Int raise CodeError {
+pub fn Symbols::dot(self : Symbols, other : Symbols) -> Int32 raise CodeError {
   if self.length() != other.length() {
     raise Shape("dot product lengths differ")
   }
@@ -111,13 +114,13 @@ pub fn Symbols::dot(self : Symbols, other : Symbols) -> Int raise CodeError {
 ///|
 pub fn Symbols::slice(
   self : Symbols,
-  start : Int,
-  end : Int,
+  start : Int32,
+  end : Int32,
 ) -> Symbols raise CodeError {
   if start < 0 || end < start || end > self.length() {
     raise Invalid("invalid symbol slice")
   }
-  let out : Array[Int] = []
+  let out : Array[Int32] = []
   for i in start..<end {
     out.push(self.values[i])
   }

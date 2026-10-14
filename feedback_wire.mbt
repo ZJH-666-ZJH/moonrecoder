@@ -1,7 +1,7 @@
 ///|
 pub fn Feedback::to_wire(self : Feedback) -> Symbols {
   let generation = self.generation()
-  let out : Array[Int] = [
+  let out : Array[Int32] = [
     77,
     82,
     70,
@@ -53,7 +53,7 @@ pub fn feedback_from_wire(frame : Symbols) -> Feedback raise CodeError {
     width,
     read_u31(values, 12),
   )
-  let pivots : Array[Int] = []
+  let pivots : Array[Int32] = []
   for i in 20..<end {
     pivots.push(values[i])
   }

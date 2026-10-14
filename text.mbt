@@ -3,7 +3,7 @@ pub fn Symbols::from_bytes(bytes : Bytes) -> Symbols raise CodeError {
   if bytes.length() > 262144 {
     raise Limit("byte adapter exceeds maximum vector size")
   }
-  let values : Array[Int] = []
+  let values : Array[Int32] = []
   for byte in bytes.to_array() {
     values.push(byte.to_int())
   }
@@ -30,11 +30,11 @@ pub fn Symbols::to_hex(self : Symbols) -> String {
 }
 
 ///|
-fn hex_digit(char : Char) -> Int {
+fn hex_digit(char : Char) -> Int32 {
   match char {
-    '0'..='9' => char.to_int() - 48
-    'a'..='f' => char.to_int() - 87
-    'A'..='F' => char.to_int() - 55
+    '0'..<='9' => char.to_int() - 48
+    'a'..<='f' => char.to_int() - 87
+    'A'..<='F' => char.to_int() - 55
     _ => -1
   }
 }
@@ -43,7 +43,7 @@ fn hex_digit(char : Char) -> Int {
 // Only ASCII whitespace is ignored, including between a byte's two nibbles.
 pub fn symbols_from_hex(
   text : String,
-  max_bytes? : Int = 262144,
+  max_bytes~ : Int32 = 262144,
 ) -> Symbols raise CodeError {
   if max_bytes < 0 || max_bytes > 262144 {
     raise Limit("hex byte budget outside 0..262144")
@@ -51,7 +51,7 @@ pub fn symbols_from_hex(
   if text.length() > 1048576 {
     raise Limit("hex text exceeds 1048576 code units")
   }
-  let values : Array[Int] = []
+  let values : Array[Int32] = []
   let mut high = -1
   for char in text.iter() {
     if char == ' ' || char == '\t' || char == '\r' || char == '\n' {

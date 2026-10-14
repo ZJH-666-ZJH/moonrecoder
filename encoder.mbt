@@ -6,9 +6,9 @@ pub struct Encoder {
 
 ///|
 pub fn Encoder::new(
-  id : Int,
+  id : Int32,
   input : Symbols,
-  width : Int,
+  width : Int32,
 ) -> Encoder raise CodeError {
   if width < 1 || width > 4096 {
     raise Limit("encoder width must be 1..4096")
@@ -74,8 +74,8 @@ pub fn Encoder::source_symbols(self : Encoder) -> Array[Symbols] {
 ///|
 pub fn Encoder::systematic(
   self : Encoder,
-  index : Int,
-  sequence : Int,
+  index : Int32,
+  sequence : Int32,
 ) -> Packet raise CodeError {
   if index < 0 || index >= self.generation_value.count() {
     raise Invalid("source index out of range")
@@ -92,7 +92,7 @@ pub fn Encoder::systematic(
 pub fn Encoder::encode(
   self : Encoder,
   coefficients : Symbols,
-  sequence : Int,
+  sequence : Int32,
 ) -> Packet raise CodeError {
   if coefficients.length() != self.generation_value.count() {
     raise Shape("encoder coefficient count mismatch")

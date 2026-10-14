@@ -1,17 +1,17 @@
 ///|
 pub struct Generation {
-  id_value : Int
-  count_value : Int
-  width_value : Int
-  length_value : Int
+  id_value : Int32
+  count_value : Int32
+  width_value : Int32
+  length_value : Int32
 }
 
 ///|
 pub fn Generation::new(
-  id : Int,
-  count : Int,
-  width : Int,
-  length : Int,
+  id : Int32,
+  count : Int32,
+  width : Int32,
+  length : Int32,
 ) -> Generation raise CodeError {
   if id < 0 {
     raise Invalid("generation ID must be a nonnegative signed 31-bit integer")
@@ -34,27 +34,27 @@ pub fn Generation::new(
 }
 
 ///|
-pub fn Generation::id(self : Generation) -> Int {
+pub fn Generation::id(self : Generation) -> Int32 {
   self.id_value
 }
 
 ///|
-pub fn Generation::count(self : Generation) -> Int {
+pub fn Generation::count(self : Generation) -> Int32 {
   self.count_value
 }
 
 ///|
-pub fn Generation::width(self : Generation) -> Int {
+pub fn Generation::width(self : Generation) -> Int32 {
   self.width_value
 }
 
 ///|
-pub fn Generation::length(self : Generation) -> Int {
+pub fn Generation::length(self : Generation) -> Int32 {
   self.length_value
 }
 
 ///|
-pub fn Generation::padded_length(self : Generation) -> Int {
+pub fn Generation::padded_length(self : Generation) -> Int32 {
   self.count_value * self.width_value
 }
 
@@ -69,14 +69,14 @@ pub fn Generation::same(self : Generation, other : Generation) -> Bool {
 ///|
 pub struct Packet {
   generation_value : Generation
-  sequence_value : Int
+  sequence_value : Int32
   equation_value : Equation
 }
 
 ///|
 pub fn Packet::new(
   generation : Generation,
-  sequence : Int,
+  sequence : Int32,
   equation : Equation,
 ) -> Packet raise CodeError {
   if sequence < 0 {
@@ -99,7 +99,7 @@ pub fn Packet::generation(self : Packet) -> Generation {
 }
 
 ///|
-pub fn Packet::sequence(self : Packet) -> Int {
+pub fn Packet::sequence(self : Packet) -> Int32 {
   self.sequence_value
 }
 
@@ -121,15 +121,15 @@ pub fn Packet::payload(self : Packet) -> Symbols {
 ///|
 pub fn Packet::with_sequence(
   self : Packet,
-  sequence : Int,
+  sequence : Int32,
 ) -> Packet raise CodeError {
   Packet::new(self.generation_value, sequence, self.equation_value)
 }
 
 ///|
 // Only exact unit vectors are systematic packets; one nonzero scalar is not.
-pub fn Packet::systematic_index(self : Packet) -> Int? {
-  let mut index : Int? = None
+pub fn Packet::systematic_index(self : Packet) -> Int32? {
+  let mut index : Int32? = None
   for i in 0..<self.generation_value.count() {
     let value = self.equation_value.coefficients.values[i]
     if value == 0 {

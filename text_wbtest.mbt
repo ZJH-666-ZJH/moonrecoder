@@ -1,6 +1,6 @@
 ///|
 test "all byte values hex and byte adapters roundtrip" {
-  let values : Array[Int] = []
+  let values : Array[Int32] = []
   for i in 0..<256 {
     values.push(i)
   }

@@ -1,13 +1,13 @@
 ///|
 pub(all) struct DecodeReport {
-  generation_id : Int
-  source_count : Int
-  rank : Int
-  deficit : Int
-  admitted : Int
-  dependent : Int
-  known : Int
-  pivots : Array[Int]
+  generation_id : Int32
+  source_count : Int32
+  rank : Int32
+  deficit : Int32
+  admitted : Int32
+  dependent : Int32
+  known : Int32
+  pivots : Array[Int32]
 }
 
 ///|
@@ -25,7 +25,7 @@ pub fn Decoder::report(self : Decoder) -> DecodeReport {
 }
 
 ///|
-fn integer_list(values : Array[Int]) -> String {
+fn integer_list(values : Array[Int32]) -> String {
   let mut text = "["
   for i in 0..<values.length() {
     if i != 0 {
@@ -69,7 +69,7 @@ pub fn Decoder::recover_symbols(
 pub fn Decoder::recover(self : Decoder) -> Symbols raise CodeError {
   let source = self.basis.recover()
   let generation = self.generation()
-  let values : Array[Int] = []
+  let values : Array[Int32] = []
   for i in 0..<source.length() {
     for j in 0..<generation.width() {
       let offset = i * generation.width() + j

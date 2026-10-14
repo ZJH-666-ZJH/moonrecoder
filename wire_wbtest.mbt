@@ -1,6 +1,6 @@
 ///|
-fn refresh_crc(values : Array[Int]) -> Symbols raise CodeError {
-  let body : Array[Int] = []
+fn refresh_crc(values : Array[Int32]) -> Symbols raise CodeError {
+  let body : Array[Int32] = []
   for i in 0..<(values.length() - 4) {
     body.push(values[i])
   }

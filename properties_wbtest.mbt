@@ -1,6 +1,6 @@
 ///|
 // Independent schoolbook carry-less product, then long division by x^8+x^4+x^3+x^2+1.
-fn oracle_product(a : Int, b : Int) -> Int {
+fn oracle_product(a : Int32, b : Int32) -> Int32 {
   let mut product = 0
   for bit in 0..<8 {
     if (b & (1 << bit)) != 0 {
@@ -33,7 +33,7 @@ test "streaming augmented rank agrees with batch elimination across prefixes" {
     )
     let encoder = Encoder::new(size, source, 3)
     let decoder = Decoder::new(encoder.generation())
-    let rows : Array[Array[Int]] = []
+    let rows : Array[Array[Int32]] = []
     for sequence in 0..<(size * 2) {
       let coefficients = stream.draw(size)
       rows.push(coefficients.to_array())

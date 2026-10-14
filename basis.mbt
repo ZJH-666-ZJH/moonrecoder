@@ -30,20 +30,20 @@ pub fn Equation::payload(self : Equation) -> Symbols {
 
 ///|
 pub enum Admission {
-  Innovative(Int, Int)
+  Innovative(Int32, Int32)
   Dependent
 }
 
 ///|
 pub struct Basis {
-  columns : Int
-  width : Int
+  columns : Int32
+  width : Int32
   rows : Array[Equation?]
-  mut rank_value : Int
+  mut rank_value : Int32
 }
 
 ///|
-pub fn Basis::new(columns : Int, width : Int) -> Basis raise CodeError {
+pub fn Basis::new(columns : Int32, width : Int32) -> Basis raise CodeError {
   if columns < 1 || columns > 64 {
     raise Limit("basis columns must be 1..64")
   }
@@ -54,18 +54,18 @@ pub fn Basis::new(columns : Int, width : Int) -> Basis raise CodeError {
 }
 
 ///|
-pub fn Basis::rank(self : Basis) -> Int {
+pub fn Basis::rank(self : Basis) -> Int32 {
   self.rank_value
 }
 
 ///|
-pub fn Basis::deficit(self : Basis) -> Int {
+pub fn Basis::deficit(self : Basis) -> Int32 {
   self.columns - self.rank_value
 }
 
 ///|
-pub fn Basis::pivots(self : Basis) -> Array[Int] {
-  let out : Array[Int] = []
+pub fn Basis::pivots(self : Basis) -> Array[Int32] {
+  let out : Array[Int32] = []
   for i in 0..<self.columns {
     if self.rows[i] is Some(_) {
       out.push(i)
@@ -136,7 +136,7 @@ pub fn Basis::admit(
     coefficients: { values: coefficients, },
     payload: { values: payload, },
   }
-  let updates : Array[(Int, Equation)] = []
+  let updates : Array[(Int32, Equation)] = []
   for i in 0..<self.columns {
     if self.rows[i] is Some(row) {
       let factor = row.coefficients.values[pivot]
@@ -181,8 +181,8 @@ pub fn Basis::recover(self : Basis) -> Array[Symbols] raise CodeError {
 
 ///|
 // Rows containing just one coefficient already determine a source symbol.
-pub fn Basis::known(self : Basis) -> Array[(Int, Symbols)] {
-  let out : Array[(Int, Symbols)] = []
+pub fn Basis::known(self : Basis) -> Array[(Int32, Symbols)] {
+  let out : Array[(Int32, Symbols)] = []
   for i in 0..<self.columns {
     if self.rows[i] is Some(row) {
       let mut isolated = true

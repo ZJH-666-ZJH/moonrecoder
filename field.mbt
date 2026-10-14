@@ -4,13 +4,13 @@ pub(all) suberror CodeError {
   Shape(String)
   Limit(String)
   Inconsistent
-  Incomplete(Int)
+  Incomplete(Int32)
   Corrupt(String)
   Truncated
 }
 
 ///|
-fn check_symbol(value : Int) -> Unit raise CodeError {
+fn check_symbol(value : Int32) -> Unit raise CodeError {
   if value < 0 || value > 255 {
     raise Invalid("field element must be in 0..255")
   }
@@ -18,7 +18,7 @@ fn check_symbol(value : Int) -> Unit raise CodeError {
 
 ///|
 // Polynomial basis; the ninth bit is reduced by x^8+x^4+x^3+x^2+1.
-fn mul(left : Int, right : Int) -> Int {
+fn mul(left : Int32, right : Int32) -> Int32 {
   let mut a = left
   let mut b = right
   let mut product = 0
@@ -36,7 +36,7 @@ fn mul(left : Int, right : Int) -> Int {
 }
 
 ///|
-fn power(value : Int, exponent : Int) -> Int {
+fn power(value : Int32, exponent : Int32) -> Int32 {
   let mut base = value
   let mut n = exponent
   let mut result = 1
@@ -51,21 +51,21 @@ fn power(value : Int, exponent : Int) -> Int {
 }
 
 ///|
-pub fn gf_add(left : Int, right : Int) -> Int raise CodeError {
+pub fn gf_add(left : Int32, right : Int32) -> Int32 raise CodeError {
   check_symbol(left)
   check_symbol(right)
   left ^ right
 }
 
 ///|
-pub fn gf_mul(left : Int, right : Int) -> Int raise CodeError {
+pub fn gf_mul(left : Int32, right : Int32) -> Int32 raise CodeError {
   check_symbol(left)
   check_symbol(right)
   mul(left, right)
 }
 
 ///|
-pub fn gf_inverse(value : Int) -> Int raise CodeError {
+pub fn gf_inverse(value : Int32) -> Int32 raise CodeError {
   check_symbol(value)
   if value == 0 {
     raise Invalid("zero has no multiplicative inverse")
@@ -74,13 +74,13 @@ pub fn gf_inverse(value : Int) -> Int raise CodeError {
 }
 
 ///|
-pub fn gf_div(left : Int, right : Int) -> Int raise CodeError {
+pub fn gf_div(left : Int32, right : Int32) -> Int32 raise CodeError {
   check_symbol(left)
   mul(left, gf_inverse(right))
 }
 
 ///|
-pub fn gf_pow(value : Int, exponent : Int) -> Int raise CodeError {
+pub fn gf_pow(value : Int32, exponent : Int32) -> Int32 raise CodeError {
   check_symbol(value)
   if exponent < 0 {
     raise Invalid("negative field exponent")
@@ -89,6 +89,6 @@ pub fn gf_pow(value : Int, exponent : Int) -> Int raise CodeError {
 }
 
 ///|
-pub fn field_polynomial() -> Int {
+pub fn field_polynomial() -> Int32 {
   285
 }

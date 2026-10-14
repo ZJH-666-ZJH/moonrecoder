@@ -1,13 +1,13 @@
 ///|
 pub struct Feedback {
   generation_value : Generation
-  pivot_values : Array[Int]
+  pivot_values : Array[Int32]
 }
 
 ///|
 pub fn Feedback::new(
   generation : Generation,
-  pivots : Array[Int],
+  pivots : Array[Int32],
 ) -> Feedback raise CodeError {
   if pivots.length() > generation.count() {
     raise Shape("feedback rank exceeds source count")
@@ -28,23 +28,23 @@ pub fn Feedback::generation(self : Feedback) -> Generation {
 }
 
 ///|
-pub fn Feedback::pivots(self : Feedback) -> Array[Int] {
+pub fn Feedback::pivots(self : Feedback) -> Array[Int32] {
   copy_values(self.pivot_values)
 }
 
 ///|
-pub fn Feedback::rank(self : Feedback) -> Int {
+pub fn Feedback::rank(self : Feedback) -> Int32 {
   self.pivot_values.length()
 }
 
 ///|
-pub fn Feedback::deficit(self : Feedback) -> Int {
+pub fn Feedback::deficit(self : Feedback) -> Int32 {
   self.generation_value.count() - self.rank()
 }
 
 ///|
-pub fn Feedback::missing_pivots(self : Feedback) -> Array[Int] {
-  let out : Array[Int] = []
+pub fn Feedback::missing_pivots(self : Feedback) -> Array[Int32] {
+  let out : Array[Int32] = []
   let mut cursor = 0
   for i in 0..<self.generation_value.count() {
     if cursor < self.pivot_values.length() && self.pivot_values[cursor] == i {
@@ -67,7 +67,7 @@ pub fn Decoder::feedback(self : Decoder) -> Feedback {
 pub fn Encoder::repair(
   self : Encoder,
   feedback : Feedback,
-  first_sequence : Int,
+  first_sequence : Int32,
 ) -> Array[Packet] raise CodeError {
   if !feedback.generation().same(self.generation()) {
     raise Shape("feedback belongs to another generation")

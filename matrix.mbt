@@ -1,12 +1,12 @@
 ///|
 pub struct FieldMatrix {
   cells : Array[Symbols]
-  columns : Int
+  columns : Int32
 }
 
 ///|
 pub fn FieldMatrix::new(
-  rows : Array[Array[Int]],
+  rows : Array[Array[Int32]],
 ) -> FieldMatrix raise CodeError {
   if rows.length() == 0 || rows.length() > 64 {
     raise Limit("matrix row count must be 1..64")
@@ -26,11 +26,11 @@ pub fn FieldMatrix::new(
 }
 
 ///|
-pub fn FieldMatrix::identity(size : Int) -> FieldMatrix raise CodeError {
+pub fn FieldMatrix::identity(size : Int32) -> FieldMatrix raise CodeError {
   if size < 1 || size > 64 {
     raise Limit("identity size must be 1..64")
   }
-  let rows : Array[Array[Int]] = []
+  let rows : Array[Array[Int32]] = []
   for i in 0..<size {
     let row = Array::make(size, 0)
     row[i] = 1
@@ -40,17 +40,17 @@ pub fn FieldMatrix::identity(size : Int) -> FieldMatrix raise CodeError {
 }
 
 ///|
-pub fn FieldMatrix::rows(self : FieldMatrix) -> Int {
+pub fn FieldMatrix::rows(self : FieldMatrix) -> Int32 {
   self.cells.length()
 }
 
 ///|
-pub fn FieldMatrix::cols(self : FieldMatrix) -> Int {
+pub fn FieldMatrix::cols(self : FieldMatrix) -> Int32 {
   self.columns
 }
 
 ///|
-pub fn FieldMatrix::to_arrays(self : FieldMatrix) -> Array[Array[Int]] {
+pub fn FieldMatrix::to_arrays(self : FieldMatrix) -> Array[Array[Int32]] {
   self.cells.map(row => row.to_array())
 }
 
@@ -58,7 +58,7 @@ pub fn FieldMatrix::to_arrays(self : FieldMatrix) -> Array[Array[Int]] {
 pub fn FieldMatrix::transpose(self : FieldMatrix) -> FieldMatrix {
   let cells : Array[Symbols] = []
   for col in 0..<self.cols() {
-    let values : Array[Int] = []
+    let values : Array[Int32] = []
     for row in 0..<self.rows() {
       values.push(self.cells[row].values[col])
     }
@@ -78,7 +78,7 @@ pub fn FieldMatrix::multiply(
   let right = other.transpose()
   let cells : Array[Symbols] = []
   for row in self.cells {
-    let values : Array[Int] = []
+    let values : Array[Int32] = []
     for col in right.cells {
       values.push(row.dot(col))
     }
@@ -89,7 +89,7 @@ pub fn FieldMatrix::multiply(
 
 ///|
 // This independent batch elimination is also a reference for streaming rank.
-pub fn FieldMatrix::rank(self : FieldMatrix) -> Int {
+pub fn FieldMatrix::rank(self : FieldMatrix) -> Int32 {
   let rows = self.to_arrays()
   let mut pivot = 0
   for col in 0..<self.cols() {

@@ -1,17 +1,17 @@
 ///|
 pub struct SessionPool {
   mut sessions : Array[Decoder]
-  generation_limit : Int
-  cell_limit : Int
-  packet_limit : Int
-  mut cells_used : Int
+  generation_limit : Int32
+  cell_limit : Int32
+  packet_limit : Int32
+  mut cells_used : Int32
 }
 
 ///|
 pub fn SessionPool::new(
-  max_generations? : Int = 16,
-  max_cells? : Int = 1048576,
-  max_packets_per_generation? : Int = 4096,
+  max_generations~ : Int32 = 16,
+  max_cells~ : Int32 = 1048576,
+  max_packets_per_generation~ : Int32 = 4096,
 ) -> SessionPool raise CodeError {
   if max_generations < 1 || max_generations > 32 {
     raise Limit("pool generation budget must be 1..32")
@@ -32,12 +32,12 @@ pub fn SessionPool::new(
 }
 
 ///|
-fn generation_cells(generation : Generation) -> Int {
+fn generation_cells(generation : Generation) -> Int32 {
   generation.count() * (generation.count() + generation.width())
 }
 
 ///|
-fn SessionPool::find(self : SessionPool, id : Int) -> Int? {
+fn SessionPool::find(self : SessionPool, id : Int32) -> Int32? {
   for i in 0..<self.sessions.length() {
     if self.sessions[i].generation().id() == id {
       return Some(i)
@@ -47,17 +47,17 @@ fn SessionPool::find(self : SessionPool, id : Int) -> Int? {
 }
 
 ///|
-pub fn SessionPool::count(self : SessionPool) -> Int {
+pub fn SessionPool::count(self : SessionPool) -> Int32 {
   self.sessions.length()
 }
 
 ///|
-pub fn SessionPool::reserved_cells(self : SessionPool) -> Int {
+pub fn SessionPool::reserved_cells(self : SessionPool) -> Int32 {
   self.cells_used
 }
 
 ///|
-pub fn SessionPool::ids(self : SessionPool) -> Array[Int] {
+pub fn SessionPool::ids(self : SessionPool) -> Array[Int32] {
   self.sessions.map(d => d.generation().id())
 }
 
@@ -91,7 +91,7 @@ pub fn SessionPool::admit(
 ///|
 pub fn SessionPool::recover(
   self : SessionPool,
-  id : Int,
+  id : Int32,
 ) -> Symbols raise CodeError {
   match self.find(id) {
     Some(index) => self.sessions[index].recover()
@@ -101,7 +101,7 @@ pub fn SessionPool::recover(
 
 ///|
 // Explicit forgetting permits ID reuse; applications must impose replay windows.
-pub fn SessionPool::discard(self : SessionPool, id : Int) -> Bool {
+pub fn SessionPool::discard(self : SessionPool, id : Int32) -> Bool {
   match self.find(id) {
     None => false
     Some(index) => {
@@ -123,7 +123,7 @@ pub fn SessionPool::discard(self : SessionPool, id : Int) -> Bool {
 // Recovery failure keeps the incomplete/invalid session available for inspection.
 pub fn SessionPool::take(
   self : SessionPool,
-  id : Int,
+  id : Int32,
 ) -> Symbols raise CodeError {
   let output = self.recover(id)
   ignore(self.discard(id))

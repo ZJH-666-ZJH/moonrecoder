@@ -1,12 +1,12 @@
 ///|
-fn write_u32(out : Array[Int], value : UInt) -> Unit {
+fn write_u32(out : Array[Int32], value : UInt32) -> Unit {
   for shift in [24, 16, 8, 0] {
     out.push(((value >> shift) & 255U).reinterpret_as_int())
   }
 }
 
 ///|
-fn read_u32(values : Array[Int], offset : Int) -> UInt {
+fn read_u32(values : Array[Int32], offset : Int32) -> UInt32 {
   let mut value = 0U
   for i in offset..<(offset + 4) {
     value = (value << 8) | values[i].reinterpret_as_uint()
@@ -15,7 +15,7 @@ fn read_u32(values : Array[Int], offset : Int) -> UInt {
 }
 
 ///|
-fn read_u31(values : Array[Int], offset : Int) -> Int raise CodeError {
+fn read_u31(values : Array[Int32], offset : Int32) -> Int32 raise CodeError {
   let value = read_u32(values, offset)
   if value > 2147483647U {
     raise Corrupt("unsigned field exceeds signed 31-bit domain")
@@ -24,7 +24,7 @@ fn read_u31(values : Array[Int], offset : Int) -> Int raise CodeError {
 }
 
 ///|
-pub fn Packet::wire_length(self : Packet) -> Int {
+pub fn Packet::wire_length(self : Packet) -> Int32 {
   28 + self.generation().count() + self.generation().width()
 }
 
@@ -33,7 +33,7 @@ pub fn Packet::wire_length(self : Packet) -> Int {
 // This is a project format, NOT an RFC 8681 / RaptorQ / Reed-Solomon frame.
 pub fn Packet::to_wire(self : Packet) -> Symbols {
   let g = self.generation()
-  let values : Array[Int] = [
+  let values : Array[Int32] = [
     77,
     82,
     67,

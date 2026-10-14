@@ -1,24 +1,24 @@
 ///|
 pub struct ReplayEvent {
-  index_value : Int
-  sequence_value : Int?
-  rank_value : Int
+  index_value : Int32
+  sequence_value : Int32?
+  rank_value : Int32
   status_value : String
   error_value : String?
 }
 
 ///|
-pub fn ReplayEvent::index(self : ReplayEvent) -> Int {
+pub fn ReplayEvent::index(self : ReplayEvent) -> Int32 {
   self.index_value
 }
 
 ///|
-pub fn ReplayEvent::sequence(self : ReplayEvent) -> Int? {
+pub fn ReplayEvent::sequence(self : ReplayEvent) -> Int32? {
   self.sequence_value
 }
 
 ///|
-pub fn ReplayEvent::rank(self : ReplayEvent) -> Int {
+pub fn ReplayEvent::rank(self : ReplayEvent) -> Int32 {
   self.rank_value
 }
 
@@ -72,15 +72,15 @@ pub fn ReplayEvent::to_json(self : ReplayEvent) -> String {
 ///|
 pub struct Replay {
   decoder : Decoder
-  event_limit : Int
+  event_limit : Int32
   event_values : Array[ReplayEvent]
-  mut rejection_count : Int
+  mut rejection_count : Int32
 }
 
 ///|
 pub fn Replay::new(
   generation : Generation,
-  max_events? : Int = 4096,
+  max_events~ : Int32 = 4096,
 ) -> Replay raise CodeError {
   {
     decoder: Decoder::new(generation, max_packets=max_events),
@@ -98,7 +98,7 @@ fn Replay::record(
   if self.event_values.length() == self.event_limit {
     raise Limit("replay event budget exhausted")
   }
-  let mut sequence : Int? = None
+  let mut sequence : Int32? = None
   let mut status = "rejected"
   let mut error : String? = None
   try {
@@ -151,7 +151,7 @@ pub fn Replay::events(self : Replay) -> Array[ReplayEvent] {
 }
 
 ///|
-pub fn Replay::rejected(self : Replay) -> Int {
+pub fn Replay::rejected(self : Replay) -> Int32 {
   self.rejection_count
 }
 

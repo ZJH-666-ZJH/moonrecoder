@@ -1,16 +1,16 @@
 ///|
 pub struct FrameReader {
-  mut pending : Array[Int]
-  mut byte_count : Int
-  mut frame_count : Int
-  byte_limit : Int
-  frame_limit : Int
+  mut pending : Array[Int32]
+  mut byte_count : Int32
+  mut frame_count : Int32
+  byte_limit : Int32
+  frame_limit : Int32
 }
 
 ///|
 pub fn FrameReader::new(
-  max_bytes? : Int = 1048576,
-  max_frames? : Int = 4096,
+  max_bytes~ : Int32 = 1048576,
+  max_frames~ : Int32 = 4096,
 ) -> FrameReader raise CodeError {
   if max_bytes < 30 || max_bytes > 16777216 {
     raise Limit("stream byte budget must be 30..16777216")
@@ -28,22 +28,25 @@ pub fn FrameReader::new(
 }
 
 ///|
-pub fn FrameReader::buffered(self : FrameReader) -> Int {
+pub fn FrameReader::buffered(self : FrameReader) -> Int32 {
   self.pending.length()
 }
 
 ///|
-pub fn FrameReader::received_bytes(self : FrameReader) -> Int {
+pub fn FrameReader::received_bytes(self : FrameReader) -> Int32 {
   self.byte_count
 }
 
 ///|
-pub fn FrameReader::frames(self : FrameReader) -> Int {
+pub fn FrameReader::frames(self : FrameReader) -> Int32 {
   self.frame_count
 }
 
 ///|
-fn header_length(values : Array[Int], offset : Int) -> Int raise CodeError {
+fn header_length(
+  values : Array[Int32],
+  offset : Int32,
+) -> Int32 raise CodeError {
   if values[offset] != 77 ||
     values[offset + 1] != 82 ||
     values[offset + 2] != 67 ||
@@ -89,14 +92,14 @@ pub fn FrameReader::feed(
     if out.length() >= self.frame_limit - self.frame_count {
       raise Limit("stream frame budget exhausted")
     }
-    let frame : Array[Int] = []
+    let frame : Array[Int32] = []
     for i in offset..<(offset + length) {
       frame.push(values[i])
     }
     out.push(packet_from_wire({ values: frame, }))
     offset = offset + length
   }
-  let pending : Array[Int] = []
+  let pending : Array[Int32] = []
   for i in offset..<values.length() {
     pending.push(values[i])
   }

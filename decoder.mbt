@@ -2,15 +2,15 @@
 pub struct Decoder {
   generation_value : Generation
   mut basis : Basis
-  packet_limit : Int
-  mut admitted_count : Int
-  mut dependent_count : Int
+  packet_limit : Int32
+  mut admitted_count : Int32
+  mut dependent_count : Int32
 }
 
 ///|
 pub fn Decoder::new(
   generation : Generation,
-  max_packets? : Int = 4096,
+  max_packets~ : Int32 = 4096,
 ) -> Decoder raise CodeError {
   if max_packets < 1 || max_packets > 65536 {
     raise Limit("decoder packet budget must be 1..65536")
@@ -30,37 +30,37 @@ pub fn Decoder::generation(self : Decoder) -> Generation {
 }
 
 ///|
-pub fn Decoder::rank(self : Decoder) -> Int {
+pub fn Decoder::rank(self : Decoder) -> Int32 {
   self.basis.rank()
 }
 
 ///|
-pub fn Decoder::deficit(self : Decoder) -> Int {
+pub fn Decoder::deficit(self : Decoder) -> Int32 {
   self.basis.deficit()
 }
 
 ///|
-pub fn Decoder::admitted(self : Decoder) -> Int {
+pub fn Decoder::admitted(self : Decoder) -> Int32 {
   self.admitted_count
 }
 
 ///|
-pub fn Decoder::dependent(self : Decoder) -> Int {
+pub fn Decoder::dependent(self : Decoder) -> Int32 {
   self.dependent_count
 }
 
 ///|
-pub fn Decoder::remaining_packets(self : Decoder) -> Int {
+pub fn Decoder::remaining_packets(self : Decoder) -> Int32 {
   self.packet_limit - self.admitted_count
 }
 
 ///|
-pub fn Decoder::pivots(self : Decoder) -> Array[Int] {
+pub fn Decoder::pivots(self : Decoder) -> Array[Int32] {
   self.basis.pivots()
 }
 
 ///|
-pub fn Decoder::known_symbols(self : Decoder) -> Array[(Int, Symbols)] {
+pub fn Decoder::known_symbols(self : Decoder) -> Array[(Int32, Symbols)] {
   self.basis.known()
 }
 

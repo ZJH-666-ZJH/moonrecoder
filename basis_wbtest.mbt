@@ -1,5 +1,5 @@
 ///|
-fn equation(c : Array[Int], p : Array[Int]) -> Equation raise CodeError {
+fn equation(c : Array[Int32], p : Array[Int32]) -> Equation raise CodeError {
   Equation::new(Symbols::new(c), Symbols::new(p))
 }
 

@@ -6,7 +6,7 @@ pub struct Relay {
 ///|
 pub fn Relay::new(
   generation : Generation,
-  max_packets? : Int = 4096,
+  max_packets~ : Int32 = 4096,
 ) -> Relay raise CodeError {
   { decoder: Decoder::new(generation, max_packets~), }
 }
@@ -17,7 +17,7 @@ pub fn Relay::generation(self : Relay) -> Generation {
 }
 
 ///|
-pub fn Relay::rank(self : Relay) -> Int {
+pub fn Relay::rank(self : Relay) -> Int32 {
   self.decoder.rank()
 }
 
@@ -37,7 +37,7 @@ pub fn Relay::report(self : Relay) -> DecodeReport {
 pub fn Relay::mix(
   self : Relay,
   weights : Symbols,
-  sequence : Int,
+  sequence : Int32,
 ) -> Packet raise CodeError {
   if sequence < 0 {
     raise Invalid("negative recoded sequence")
@@ -75,7 +75,7 @@ pub fn Relay::mix(
 pub fn Relay::coded(
   self : Relay,
   stream : CoefficientStream,
-  sequence : Int,
+  sequence : Int32,
 ) -> Packet raise CodeError {
   if sequence < 0 {
     raise Invalid("negative recoded sequence")
@@ -90,7 +90,7 @@ pub fn Relay::coded(
 // Export independent relay rows rather than promising random packet independence.
 pub fn Relay::basis_packets(
   self : Relay,
-  first_sequence : Int,
+  first_sequence : Int32,
 ) -> Array[Packet] raise CodeError {
   if first_sequence < 0 {
     raise Invalid("negative first sequence")

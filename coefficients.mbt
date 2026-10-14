@@ -1,14 +1,14 @@
 ///|
 pub struct CoefficientStream {
-  mut state : UInt
-  mut draw_count : Int
-  draw_limit : Int
+  mut state : UInt32
+  mut draw_count : Int32
+  draw_limit : Int32
 }
 
 ///|
 pub fn CoefficientStream::new(
-  seed : UInt,
-  max_draws? : Int = 1048576,
+  seed : UInt32,
+  max_draws~ : Int32 = 1048576,
 ) -> CoefficientStream raise CodeError {
   if seed == 0U {
     raise Invalid("xorshift seed must be nonzero")
@@ -20,19 +20,19 @@ pub fn CoefficientStream::new(
 }
 
 ///|
-fn rng_step(state : UInt) -> UInt {
+fn rng_step(state : UInt32) -> UInt32 {
   let x = state ^ (state << 13)
   let y = x ^ (x >> 17)
   y ^ (y << 5)
 }
 
 ///|
-pub fn CoefficientStream::draws(self : CoefficientStream) -> Int {
+pub fn CoefficientStream::draws(self : CoefficientStream) -> Int32 {
   self.draw_count
 }
 
 ///|
-pub fn CoefficientStream::remaining(self : CoefficientStream) -> Int {
+pub fn CoefficientStream::remaining(self : CoefficientStream) -> Int32 {
   self.draw_limit - self.draw_count
 }
 
@@ -41,7 +41,7 @@ pub fn CoefficientStream::remaining(self : CoefficientStream) -> Int {
 // The all-zero vector is replaced by e_0; this is deliberately not uniform.
 pub fn CoefficientStream::draw(
   self : CoefficientStream,
-  count : Int,
+  count : Int32,
 ) -> Symbols raise CodeError {
   if count < 1 || count > 64 {
     raise Limit("coefficient count must be 1..64")
@@ -50,7 +50,7 @@ pub fn CoefficientStream::draw(
     raise Limit("coefficient stream exhausted")
   }
   let mut state = self.state
-  let values : Array[Int] = []
+  let values : Array[Int32] = []
   let mut any = false
   for _ in 0..<count {
     state = rng_step(state)
@@ -72,7 +72,7 @@ pub fn CoefficientStream::draw(
 pub fn Encoder::coded(
   self : Encoder,
   stream : CoefficientStream,
-  sequence : Int,
+  sequence : Int32,
 ) -> Packet raise CodeError {
   if sequence < 0 {
     raise Invalid("negative packet sequence")
