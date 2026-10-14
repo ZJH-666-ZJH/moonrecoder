@@ -1,0 +1,50 @@
+name: CI
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    name: verify (${{ matrix.target }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [wasm-gc, wasm, js, native]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install official stable MoonBit
+        run: |
+          curl -fsSL https://cli.moonbitlang.com/install/unix.sh -o /tmp/install-moonbit.sh
+          bash /tmp/install-moonbit.sh
+          echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
+      - name: Record environment
+        run: |
+          moon version --all
+          node --version
+          gcc --version
+      - name: Interface and format
+        run: |
+          moon info
+          moon fmt
+          git diff --exit-code
+          moon fmt --check
+      - name: Strict checks, build, tests
+        run: |
+          moon check --deny-warn --target ${{ matrix.target }}
+          moon build --deny-warn --target ${{ matrix.target }}
+          moon test --deny-warn --target ${{ matrix.target }}
+      - name: Downstream workflows
+        run: |
+          moon run examples/telemetry --deny-warn --target ${{ matrix.target }}
+          moon run examples/relay --deny-warn --target ${{ matrix.target }}
+          moon run examples/trace --deny-warn --target ${{ matrix.target }}
+      - name: Production size guard
+        run: python3 scripts/audit.py
