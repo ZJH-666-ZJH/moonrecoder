@@ -1,7 +1,7 @@
 ///|
 pub struct Decoder {
   generation_value : Generation
-  basis : Basis
+  mut basis : Basis
   packet_limit : Int
   mut admitted_count : Int
   mut dependent_count : Int
