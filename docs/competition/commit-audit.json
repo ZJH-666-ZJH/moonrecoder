@@ -1,0 +1,321 @@
+{
+  "policy": "First 22 coherent implementation/example/test commits only; exclude documentation/interface/delivery commits. Each listed strict check/test was executed before committing that slice.",
+  "count": 22,
+  "commits": [
+    {
+      "sha": "b04654c62f97b7eb33e2794e4243501ec5424800",
+      "subject": "feat(field): implement validated GF256 polynomial arithmetic",
+      "paths": [
+        ".gitignore",
+        "LICENSE",
+        "field.mbt",
+        "field_wbtest.mbt",
+        "moon.mod",
+        "moon.pkg"
+      ],
+      "verification": [
+        "moon fmt",
+        "moon check --deny-warn",
+        "moon test --deny-warn"
+      ],
+      "counted": true
+    },
+    {
+      "sha": "7c6480b6ab35f16a2eff9e3949558bb366a932c6",
+      "subject": "feat(symbols): add detached bounded vectors and field operations",
+      "paths": [
+        "symbols.mbt",
+        "symbols_wbtest.mbt"
+      ],
+      "verification": [
+        "moon fmt",
+        "moon check --deny-warn",
+        "moon test --deny-warn"
+      ],
+      "counted": true
+    },
+    {
+      "sha": "500059628a8cd520aad294aa9866b2f80db4a9e0",
+      "subject": "feat(matrix): add bounded independent batch rank and inverse",
+      "paths": [
+        "matrix.mbt",
+        "matrix_wbtest.mbt"
+      ],
+      "verification": [
+        "moon fmt",
+        "moon check --deny-warn",
+        "moon test --deny-warn"
+      ],
+      "counted": true
+    },
+    {
+      "sha": "ed555d20a8a7b2d3c63be79de512aaa4e1b6cb79",
+      "subject": "feat(basis): implement transactional incremental augmented RREF",
+      "paths": [
+        "basis.mbt",
+        "basis_wbtest.mbt"
+      ],
+      "verification": [
+        "moon fmt",
+        "moon check --deny-warn",
+        "moon test --deny-warn"
+      ],
+      "counted": true
+    },
+    {
+      "sha": "6771c2e40355385f56d9a526a771613f470fb89f",
+      "subject": "feat(packet): enforce immutable generation identity and packet shapes",
+      "paths": [
+        "packet.mbt",
+        "packet_wbtest.mbt"
+      ],
+      "verification": [
+        "moon fmt",
+        "moon check --deny-warn",
+        "moon test --deny-warn"
+      ],
+      "counted": true
+    },
+    {
+      "sha": "84d7d60fb1703e07fa8255022aadbf29b698e86d",
+      "subject": "feat(encoder): encode systematic and arbitrary coefficient packets",
+      "paths": [
+        "encoder.mbt",
+        "encoder_wbtest.mbt"
+      ],
+      "verification": [
+        "moon fmt",
+        "moon check --deny-warn",
+        "moon test --deny-warn"
+      ],
+      "counted": true
+    },
+    {
+      "sha": "76fbec437b2099a2db83becf8f63666b3ffaa4ff",
+      "subject": "feat(coefficients): add deterministic bounded coding streams",
+      "paths": [
+        "coefficients.mbt",
+        "coefficients_wbtest.mbt"
+      ],
+      "verification": [
+        "moon fmt",
+        "moon check --deny-warn",
+        "moon test --deny-warn"
+      ],
+      "counted": true
+    },
+    {
+      "sha": "80e5beea2c39d099a2500c3b9657c9fcbb67100c",
+      "subject": "feat(decoder): bind streaming innovation to generation and packet budgets",
+      "paths": [
+        "decoder.mbt",
+        "decoder_wbtest.mbt"
+      ],
+      "verification": [
+        "moon fmt",
+        "moon check --deny-warn",
+        "moon test --deny-warn"
+      ],
+      "counted": true
+    },
+    {
+      "sha": "3ff482d89665b1198b8591d0ebf57d4d4404e25a",
+      "subject": "feat(recovery): add exact padded recovery and detached rank diagnostics",
+      "paths": [
+        "recovery.mbt",
+        "recovery_wbtest.mbt"
+      ],
+      "verification": [
+        "moon fmt",
+        "moon check --deny-warn",
+        "moon test --deny-warn"
+      ],
+      "counted": true
+    },
+    {
+      "sha": "84918d698764461106ede5db3131de4acb9aabbd",
+      "subject": "feat(relay): recode incomplete pivot bases without source recovery",
+      "paths": [
+        "relay.mbt",
+        "relay_wbtest.mbt"
+      ],
+      "verification": [
+        "moon fmt",
+        "moon check --deny-warn",
+        "moon test --deny-warn"
+      ],
+      "counted": true
+    },
+    {
+      "sha": "b98f65d96fd870f580673dfcca6c1d0f1f7f91d9",
+      "subject": "feat(integrity): implement incremental IEEE CRC32 for packet damage checks",
+      "paths": [
+        "crc.mbt",
+        "crc_wbtest.mbt"
+      ],
+      "verification": [
+        "moon fmt",
+        "moon check --deny-warn",
+        "moon test --deny-warn"
+      ],
+      "counted": true
+    },
+    {
+      "sha": "d454dae87285dad2f68c426fc1890c2d77158934",
+      "subject": "feat(wire): validate bounded explicit-coefficient packet frames",
+      "paths": [
+        "wire.mbt",
+        "wire_wbtest.mbt"
+      ],
+      "verification": [
+        "moon fmt",
+        "moon check --deny-warn",
+        "moon test --deny-warn"
+      ],
+      "counted": true
+    },
+    {
+      "sha": "223f4384c887401c599822c08c7769ec3c264a1a",
+      "subject": "feat(framing): add transactional bounded incremental packet streams",
+      "paths": [
+        "framing.mbt",
+        "framing_wbtest.mbt"
+      ],
+      "verification": [
+        "moon fmt",
+        "moon check --deny-warn",
+        "moon test --deny-warn"
+      ],
+      "counted": true
+    },
+    {
+      "sha": "ef1a272b3c7c474494c7441ae63e49b77080eeab",
+      "subject": "feat(sessions): multiplex generations with explicit field-cell reservations",
+      "paths": [
+        "sessions.mbt",
+        "sessions_wbtest.mbt"
+      ],
+      "verification": [
+        "moon fmt",
+        "moon check --deny-warn",
+        "moon test --deny-warn"
+      ],
+      "counted": true
+    },
+    {
+      "sha": "d56125ffae010f3e4c8816b9a22c598457e897bd",
+      "subject": "feat(feedback): plan complementary source packets from receiver pivots",
+      "paths": [
+        "feedback.mbt",
+        "feedback_wbtest.mbt"
+      ],
+      "verification": [
+        "moon fmt",
+        "moon check --deny-warn",
+        "moon test --deny-warn"
+      ],
+      "counted": true
+    },
+    {
+      "sha": "e2772723aa6dd790909de4042586f846bc9bf5d0",
+      "subject": "feat(feedback-wire): serialize checksummed receiver pivot hints",
+      "paths": [
+        "feedback_wire.mbt",
+        "feedback_wire_wbtest.mbt"
+      ],
+      "verification": [
+        "moon fmt",
+        "moon check --deny-warn",
+        "moon test --deny-warn"
+      ],
+      "counted": true
+    },
+    {
+      "sha": "d1563dfa1087ef85c8b06b193e8333d9a5e15790",
+      "subject": "feat(transaction): support independent forks and atomic packet batches",
+      "paths": [
+        "decoder.mbt",
+        "transaction.mbt",
+        "transaction_wbtest.mbt"
+      ],
+      "verification": [
+        "moon fmt",
+        "moon check --deny-warn",
+        "moon test --deny-warn"
+      ],
+      "counted": true
+    },
+    {
+      "sha": "2ba934ca20638ab1dfc4dff2c1c995e746924e43",
+      "subject": "feat(text): expose bounded hex traces and native Bytes adapters",
+      "paths": [
+        "text.mbt",
+        "text_wbtest.mbt"
+      ],
+      "verification": [
+        "moon fmt",
+        "moon check --deny-warn",
+        "moon test --deny-warn"
+      ],
+      "counted": true
+    },
+    {
+      "sha": "040843fd3b30cf6c931d4964ceff33a4510fe196",
+      "subject": "feat(replay): record bounded damaged-packet traces without rank pollution",
+      "paths": [
+        "replay.mbt",
+        "replay_wbtest.mbt"
+      ],
+      "verification": [
+        "moon fmt",
+        "moon check --deny-warn",
+        "moon test --deny-warn"
+      ],
+      "counted": true
+    },
+    {
+      "sha": "05ea69fa73f3c64d9c8a8f38a9b852336ffbcf8a",
+      "subject": "test(properties): exhaust field products and cross-check rank relay and frame splits",
+      "paths": [
+        "properties_wbtest.mbt"
+      ],
+      "verification": [
+        "moon fmt",
+        "moon check --deny-warn",
+        "moon test --deny-warn"
+      ],
+      "counted": true
+    },
+    {
+      "sha": "6493025abbe7f279f913fc5b23fe52b1232a933e",
+      "subject": "feat(examples): add loss repair incomplete relay and interleaved trace workflows",
+      "paths": [
+        "examples/relay/main.mbt",
+        "examples/relay/moon.pkg",
+        "examples/telemetry/main.mbt",
+        "examples/telemetry/moon.pkg",
+        "examples/trace/main.mbt",
+        "examples/trace/moon.pkg"
+      ],
+      "verification": [
+        "moon fmt",
+        "moon check --deny-warn",
+        "moon test --deny-warn"
+      ],
+      "counted": true
+    },
+    {
+      "sha": "8a1623aaebff0aa479b928f66ac5af8d28581296",
+      "subject": "test(boundaries): cover maximum frames stale feedback and transactional budget errors",
+      "paths": [
+        "boundaries_wbtest.mbt"
+      ],
+      "verification": [
+        "moon fmt",
+        "moon check --deny-warn",
+        "moon test --deny-warn"
+      ],
+      "counted": true
+    }
+  ]
+}

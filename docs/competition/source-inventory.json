@@ -1,0 +1,101 @@
+{
+  "files": [
+    {
+      "file": "basis.mbt",
+      "physical": 200,
+      "nonblank_noncomment": 170
+    },
+    {
+      "file": "coefficients.mbt",
+      "physical": 82,
+      "nonblank_noncomment": 67
+    },
+    {
+      "file": "crc.mbt",
+      "physical": 38,
+      "nonblank_noncomment": 28
+    },
+    {
+      "file": "decoder.mbt",
+      "physical": 90,
+      "nonblank_noncomment": 66
+    },
+    {
+      "file": "encoder.mbt",
+      "physical": 117,
+      "nonblank_noncomment": 104
+    },
+    {
+      "file": "feedback.mbt",
+      "physical": 88,
+      "nonblank_noncomment": 69
+    },
+    {
+      "file": "feedback_wire.mbt",
+      "physical": 61,
+      "nonblank_noncomment": 58
+    },
+    {
+      "file": "field.mbt",
+      "physical": 94,
+      "nonblank_noncomment": 74
+    },
+    {
+      "file": "framing.mbt",
+      "physical": 126,
+      "nonblank_noncomment": 109
+    },
+    {
+      "file": "matrix.mbt",
+      "physical": 163,
+      "nonblank_noncomment": 143
+    },
+    {
+      "file": "packet.mbt",
+      "physical": 147,
+      "nonblank_noncomment": 113
+    },
+    {
+      "file": "recovery.mbt",
+      "physical": 85,
+      "nonblank_noncomment": 73
+    },
+    {
+      "file": "relay.mbt",
+      "physical": 107,
+      "nonblank_noncomment": 87
+    },
+    {
+      "file": "replay.mbt",
+      "physical": 166,
+      "nonblank_noncomment": 132
+    },
+    {
+      "file": "sessions.mbt",
+      "physical": 131,
+      "nonblank_noncomment": 106
+    },
+    {
+      "file": "symbols.mbt",
+      "physical": 140,
+      "nonblank_noncomment": 112
+    },
+    {
+      "file": "text.mbt",
+      "physical": 88,
+      "nonblank_noncomment": 74
+    },
+    {
+      "file": "transaction.mbt",
+      "physical": 85,
+      "nonblank_noncomment": 74
+    },
+    {
+      "file": "wire.mbt",
+      "physical": 100,
+      "nonblank_noncomment": 87
+    }
+  ],
+  "physical": 2108,
+  "nonblank_noncomment": 1746
+}
