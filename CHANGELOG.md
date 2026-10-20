@@ -16,6 +16,10 @@
   and conflicting-generation pool reservations. Release synchronization is gated
   on the exact commit's four-target CI; historical 0.1.0 is not overwritten.
 
+- Refreshed the generated interface using the official 2026-10-16 compiler
+  (canonical `Int32`/`UInt32` names), matching the four-target CI toolchain.
+  This is a generated-type spelling update, not an arithmetic or wire change.
+
 ## 0.1.0 — 2026-10-14
 
 Initial release: bounded GF(256) vectors and matrices, transactional incremental augmented RREF, systematic/explicit/seeded encoding, rank-aware decoding and canonical recovery, incomplete relay recoding, pivot feedback repair, CRC-protected MRC1/MRF1 wire formats, incremental framing, multi-generation budget reservations, atomic batch/fork operations, Bytes/hex adapters and structured offline replay.

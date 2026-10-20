@@ -84,6 +84,7 @@ moon run examples/relay --target wasm-gc --deny-warn
 moon run examples/trace --target wasm-gc --deny-warn
 ```
 
+本修复版使用官方稳定工具链 `moon 0.1.20261016` / `moonc 0.10.16` 核验，生成接口采用该版的 `Int32` / `UInt32` 类型名称。
 把目标替换为 wasm / js / native 可复现 CI 流程。0.1.1 有 52 个测试（历史版本 0.1.0 为 43 个）；另有公开字段封装回归脚本，逐项验证 11 个可变内部引用不能被下游直接读取。原有测试包含所有 65536 对域乘法与独立多项式长除法 oracle 的比较、增量/批量秩一致性、255 组中继权重、全部单切点组帧、最大帧、矛盾与原子回滚，以及 256 组二进制方程对的反馈补秩/分叉隔离、包与反馈的逐 bit 损坏拒绝。没有发布吞吐量或覆盖率保证。
 
 [CI](https://github.com/ZJH-666-ZJH/moonrecoder/actions/workflows/ci.yml) 使用干净 Ubuntu runner 执行四后端检查、构建、测试和三个示例。实际交付证据见 [工程审计](docs/competition/engineering-audit.md)。

@@ -2,29 +2,29 @@
 package "ZJH-666-ZJH/moonrecoder"
 
 // Values
-pub fn crc32(Symbols) -> UInt
+pub fn crc32(Symbols) -> UInt32
 
 pub fn feedback_from_hex(String) -> Feedback raise CodeError
 
 pub fn feedback_from_wire(Symbols) -> Feedback raise CodeError
 
-pub fn field_polynomial() -> Int
+pub fn field_polynomial() -> Int32
 
-pub fn gf_add(Int, Int) -> Int raise CodeError
+pub fn gf_add(Int32, Int32) -> Int32 raise CodeError
 
-pub fn gf_div(Int, Int) -> Int raise CodeError
+pub fn gf_div(Int32, Int32) -> Int32 raise CodeError
 
-pub fn gf_inverse(Int) -> Int raise CodeError
+pub fn gf_inverse(Int32) -> Int32 raise CodeError
 
-pub fn gf_mul(Int, Int) -> Int raise CodeError
+pub fn gf_mul(Int32, Int32) -> Int32 raise CodeError
 
-pub fn gf_pow(Int, Int) -> Int raise CodeError
+pub fn gf_pow(Int32, Int32) -> Int32 raise CodeError
 
 pub fn packet_from_hex(String) -> Packet raise CodeError
 
 pub fn packet_from_wire(Symbols) -> Packet raise CodeError
 
-pub fn symbols_from_hex(String, max_bytes? : Int) -> Symbols raise CodeError
+pub fn symbols_from_hex(String, max_bytes? : Int32) -> Symbols raise CodeError
 
 // Errors
 pub(all) suberror CodeError {
@@ -32,100 +32,100 @@ pub(all) suberror CodeError {
   Shape(String)
   Limit(String)
   Inconsistent
-  Incomplete(Int)
+  Incomplete(Int32)
   Corrupt(String)
   Truncated
 }
 
 // Types and methods
 pub enum Admission {
-  Innovative(Int, Int)
+  Innovative(Int32, Int32)
   Dependent
 }
 
 pub struct Basis {
-  columns : Int
-  width : Int
-  mut rank_value : Int
+  columns : Int32
+  width : Int32
+  mut rank_value : Int32
   // private fields
 }
 pub fn Basis::admit(Self, Equation) -> Admission raise CodeError
-pub fn Basis::deficit(Self) -> Int
+pub fn Basis::deficit(Self) -> Int32
 pub fn Basis::equations(Self) -> Array[Equation]
-pub fn Basis::known(Self) -> Array[(Int, Symbols)]
-pub fn Basis::new(Int, Int) -> Self raise CodeError
-pub fn Basis::pivots(Self) -> Array[Int]
-pub fn Basis::rank(Self) -> Int
+pub fn Basis::known(Self) -> Array[(Int32, Symbols)]
+pub fn Basis::new(Int32, Int32) -> Self raise CodeError
+pub fn Basis::pivots(Self) -> Array[Int32]
+pub fn Basis::rank(Self) -> Int32
 pub fn Basis::recover(Self) -> Array[Symbols] raise CodeError
 
 pub struct CoefficientStream {
-  mut state : UInt
-  mut draw_count : Int
-  draw_limit : Int
+  mut state : UInt32
+  mut draw_count : Int32
+  draw_limit : Int32
 }
-pub fn CoefficientStream::draw(Self, Int) -> Symbols raise CodeError
-pub fn CoefficientStream::draws(Self) -> Int
-pub fn CoefficientStream::new(UInt, max_draws? : Int) -> Self raise CodeError
-pub fn CoefficientStream::remaining(Self) -> Int
+pub fn CoefficientStream::draw(Self, Int32) -> Symbols raise CodeError
+pub fn CoefficientStream::draws(Self) -> Int32
+pub fn CoefficientStream::new(UInt32, max_draws? : Int32) -> Self raise CodeError
+pub fn CoefficientStream::remaining(Self) -> Int32
 
 pub struct Crc32 {
-  mut accumulator : UInt
+  mut accumulator : UInt32
 }
 pub fn Crc32::new() -> Self
 pub fn Crc32::update(Self, Symbols) -> Unit
-pub fn Crc32::value(Self) -> UInt
+pub fn Crc32::value(Self) -> UInt32
 
 pub(all) struct DecodeReport {
-  generation_id : Int
-  source_count : Int
-  rank : Int
-  deficit : Int
-  admitted : Int
-  dependent : Int
-  known : Int
-  pivots : Array[Int]
+  generation_id : Int32
+  source_count : Int32
+  rank : Int32
+  deficit : Int32
+  admitted : Int32
+  dependent : Int32
+  known : Int32
+  pivots : Array[Int32]
 }
 pub fn DecodeReport::to_json(Self) -> String
 
 pub struct Decoder {
   generation_value : Generation
-  packet_limit : Int
-  mut admitted_count : Int
-  mut dependent_count : Int
+  packet_limit : Int32
+  mut admitted_count : Int32
+  mut dependent_count : Int32
   // private fields
 }
 pub fn Decoder::admit(Self, Packet) -> Admission raise CodeError
 pub fn Decoder::admit_batch(Self, Array[Packet]) -> Array[Admission] raise CodeError
 pub fn Decoder::admit_wire_batch(Self, Array[Symbols]) -> Array[Admission] raise CodeError
-pub fn Decoder::admitted(Self) -> Int
+pub fn Decoder::admitted(Self) -> Int32
 pub fn Decoder::basis_equations(Self) -> Array[Equation]
-pub fn Decoder::deficit(Self) -> Int
-pub fn Decoder::dependent(Self) -> Int
+pub fn Decoder::deficit(Self) -> Int32
+pub fn Decoder::dependent(Self) -> Int32
 pub fn Decoder::feedback(Self) -> Feedback
 pub fn Decoder::fork(Self) -> Self
 pub fn Decoder::generation(Self) -> Generation
 pub fn Decoder::is_reduced(Self) -> Bool
-pub fn Decoder::known_symbols(Self) -> Array[(Int, Symbols)]
-pub fn Decoder::new(Generation, max_packets? : Int) -> Self raise CodeError
-pub fn Decoder::pivots(Self) -> Array[Int]
-pub fn Decoder::rank(Self) -> Int
+pub fn Decoder::known_symbols(Self) -> Array[(Int32, Symbols)]
+pub fn Decoder::new(Generation, max_packets? : Int32) -> Self raise CodeError
+pub fn Decoder::pivots(Self) -> Array[Int32]
+pub fn Decoder::rank(Self) -> Int32
 pub fn Decoder::recover(Self) -> Symbols raise CodeError
 pub fn Decoder::recover_symbols(Self) -> Array[Symbols] raise CodeError
-pub fn Decoder::remaining_packets(Self) -> Int
+pub fn Decoder::remaining_packets(Self) -> Int32
 pub fn Decoder::report(Self) -> DecodeReport
 
 pub struct Encoder {
   generation_value : Generation
   // private fields
 }
-pub fn Encoder::coded(Self, CoefficientStream, Int) -> Packet raise CodeError
-pub fn Encoder::encode(Self, Symbols, Int) -> Packet raise CodeError
+pub fn Encoder::coded(Self, CoefficientStream, Int32) -> Packet raise CodeError
+pub fn Encoder::encode(Self, Symbols, Int32) -> Packet raise CodeError
 pub fn Encoder::from_symbols(Generation, Array[Symbols]) -> Self raise CodeError
 pub fn Encoder::generation(Self) -> Generation
-pub fn Encoder::new(Int, Symbols, Int) -> Self raise CodeError
-pub fn Encoder::repair(Self, Feedback, Int) -> Array[Packet] raise CodeError
+pub fn Encoder::new(Int32, Symbols, Int32) -> Self raise CodeError
+pub fn Encoder::repair(Self, Feedback, Int32) -> Array[Packet] raise CodeError
 pub fn Encoder::source_symbols(Self) -> Array[Symbols]
-pub fn Encoder::systematic(Self, Int, Int) -> Packet raise CodeError
+pub fn Encoder::systematic(Self, Int32, Int32) -> Packet raise CodeError
 
 pub struct Equation {
   coefficients : Symbols
@@ -139,146 +139,146 @@ pub struct Feedback {
   generation_value : Generation
   // private fields
 }
-pub fn Feedback::deficit(Self) -> Int
+pub fn Feedback::deficit(Self) -> Int32
 pub fn Feedback::generation(Self) -> Generation
-pub fn Feedback::missing_pivots(Self) -> Array[Int]
-pub fn Feedback::new(Generation, Array[Int]) -> Self raise CodeError
-pub fn Feedback::pivots(Self) -> Array[Int]
-pub fn Feedback::rank(Self) -> Int
+pub fn Feedback::missing_pivots(Self) -> Array[Int32]
+pub fn Feedback::new(Generation, Array[Int32]) -> Self raise CodeError
+pub fn Feedback::pivots(Self) -> Array[Int32]
+pub fn Feedback::rank(Self) -> Int32
 pub fn Feedback::to_wire(Self) -> Symbols
 
 pub struct FieldMatrix {
-  columns : Int
+  columns : Int32
   // private fields
 }
-pub fn FieldMatrix::cols(Self) -> Int
-pub fn FieldMatrix::identity(Int) -> Self raise CodeError
+pub fn FieldMatrix::cols(Self) -> Int32
+pub fn FieldMatrix::identity(Int32) -> Self raise CodeError
 pub fn FieldMatrix::inverse(Self) -> Self raise CodeError
 pub fn FieldMatrix::multiply(Self, Self) -> Self raise CodeError
-pub fn FieldMatrix::new(Array[Array[Int]]) -> Self raise CodeError
-pub fn FieldMatrix::rank(Self) -> Int
-pub fn FieldMatrix::rows(Self) -> Int
-pub fn FieldMatrix::to_arrays(Self) -> Array[Array[Int]]
+pub fn FieldMatrix::new(Array[Array[Int32]]) -> Self raise CodeError
+pub fn FieldMatrix::rank(Self) -> Int32
+pub fn FieldMatrix::rows(Self) -> Int32
+pub fn FieldMatrix::to_arrays(Self) -> Array[Array[Int32]]
 pub fn FieldMatrix::transpose(Self) -> Self
 
 pub struct FrameReader {
-  mut byte_count : Int
-  mut frame_count : Int
-  byte_limit : Int
-  frame_limit : Int
+  mut byte_count : Int32
+  mut frame_count : Int32
+  byte_limit : Int32
+  frame_limit : Int32
   // private fields
 }
-pub fn FrameReader::buffered(Self) -> Int
+pub fn FrameReader::buffered(Self) -> Int32
 pub fn FrameReader::feed(Self, Symbols) -> Array[Packet] raise CodeError
 pub fn FrameReader::finish(Self) -> Unit raise CodeError
-pub fn FrameReader::frames(Self) -> Int
-pub fn FrameReader::new(max_bytes? : Int, max_frames? : Int) -> Self raise CodeError
-pub fn FrameReader::received_bytes(Self) -> Int
+pub fn FrameReader::frames(Self) -> Int32
+pub fn FrameReader::new(max_bytes? : Int32, max_frames? : Int32) -> Self raise CodeError
+pub fn FrameReader::received_bytes(Self) -> Int32
 
 pub struct Generation {
-  id_value : Int
-  count_value : Int
-  width_value : Int
-  length_value : Int
+  id_value : Int32
+  count_value : Int32
+  width_value : Int32
+  length_value : Int32
 }
-pub fn Generation::count(Self) -> Int
-pub fn Generation::id(Self) -> Int
-pub fn Generation::length(Self) -> Int
-pub fn Generation::new(Int, Int, Int, Int) -> Self raise CodeError
-pub fn Generation::padded_length(Self) -> Int
+pub fn Generation::count(Self) -> Int32
+pub fn Generation::id(Self) -> Int32
+pub fn Generation::length(Self) -> Int32
+pub fn Generation::new(Int32, Int32, Int32, Int32) -> Self raise CodeError
+pub fn Generation::padded_length(Self) -> Int32
 pub fn Generation::same(Self, Self) -> Bool
-pub fn Generation::width(Self) -> Int
+pub fn Generation::width(Self) -> Int32
 
 pub struct Packet {
   generation_value : Generation
-  sequence_value : Int
+  sequence_value : Int32
   equation_value : Equation
 }
 pub fn Packet::coefficients(Self) -> Symbols
 pub fn Packet::equation(Self) -> Equation
 pub fn Packet::generation(Self) -> Generation
-pub fn Packet::new(Generation, Int, Equation) -> Self raise CodeError
+pub fn Packet::new(Generation, Int32, Equation) -> Self raise CodeError
 pub fn Packet::payload(Self) -> Symbols
-pub fn Packet::sequence(Self) -> Int
-pub fn Packet::systematic_index(Self) -> Int?
+pub fn Packet::sequence(Self) -> Int32
+pub fn Packet::systematic_index(Self) -> Int32?
 pub fn Packet::to_wire(Self) -> Symbols
-pub fn Packet::wire_length(Self) -> Int
-pub fn Packet::with_sequence(Self, Int) -> Self raise CodeError
+pub fn Packet::wire_length(Self) -> Int32
+pub fn Packet::with_sequence(Self, Int32) -> Self raise CodeError
 
 pub struct Relay {
   // private fields
 }
 pub fn Relay::admit(Self, Packet) -> Admission raise CodeError
-pub fn Relay::basis_packets(Self, Int) -> Array[Packet] raise CodeError
-pub fn Relay::coded(Self, CoefficientStream, Int) -> Packet raise CodeError
+pub fn Relay::basis_packets(Self, Int32) -> Array[Packet] raise CodeError
+pub fn Relay::coded(Self, CoefficientStream, Int32) -> Packet raise CodeError
 pub fn Relay::generation(Self) -> Generation
-pub fn Relay::mix(Self, Symbols, Int) -> Packet raise CodeError
-pub fn Relay::new(Generation, max_packets? : Int) -> Self raise CodeError
-pub fn Relay::rank(Self) -> Int
+pub fn Relay::mix(Self, Symbols, Int32) -> Packet raise CodeError
+pub fn Relay::new(Generation, max_packets? : Int32) -> Self raise CodeError
+pub fn Relay::rank(Self) -> Int32
 pub fn Relay::report(Self) -> DecodeReport
 
 pub struct Replay {
-  event_limit : Int
-  mut rejection_count : Int
+  event_limit : Int32
+  mut rejection_count : Int32
   // private fields
 }
 pub fn Replay::events(Self) -> Array[ReplayEvent]
 pub fn Replay::feed_hex(Self, String) -> ReplayEvent raise CodeError
 pub fn Replay::feed_wire(Self, Symbols) -> ReplayEvent raise CodeError
-pub fn Replay::new(Generation, max_events? : Int) -> Self raise CodeError
+pub fn Replay::new(Generation, max_events? : Int32) -> Self raise CodeError
 pub fn Replay::recover(Self) -> Symbols raise CodeError
-pub fn Replay::rejected(Self) -> Int
+pub fn Replay::rejected(Self) -> Int32
 pub fn Replay::report(Self) -> DecodeReport
 
 pub struct ReplayEvent {
-  index_value : Int
-  sequence_value : Int?
-  rank_value : Int
+  index_value : Int32
+  sequence_value : Int32?
+  rank_value : Int32
   status_value : String
   error_value : String?
 }
 pub fn ReplayEvent::error_kind(Self) -> String?
-pub fn ReplayEvent::index(Self) -> Int
-pub fn ReplayEvent::rank(Self) -> Int
-pub fn ReplayEvent::sequence(Self) -> Int?
+pub fn ReplayEvent::index(Self) -> Int32
+pub fn ReplayEvent::rank(Self) -> Int32
+pub fn ReplayEvent::sequence(Self) -> Int32?
 pub fn ReplayEvent::status(Self) -> String
 pub fn ReplayEvent::to_json(Self) -> String
 
 pub struct SessionPool {
-  generation_limit : Int
-  cell_limit : Int
-  packet_limit : Int
-  mut cells_used : Int
+  generation_limit : Int32
+  cell_limit : Int32
+  packet_limit : Int32
+  mut cells_used : Int32
   // private fields
 }
 pub fn SessionPool::admit(Self, Packet) -> Admission raise CodeError
-pub fn SessionPool::count(Self) -> Int
-pub fn SessionPool::discard(Self, Int) -> Bool
-pub fn SessionPool::ids(Self) -> Array[Int]
-pub fn SessionPool::new(max_generations? : Int, max_cells? : Int, max_packets_per_generation? : Int) -> Self raise CodeError
-pub fn SessionPool::recover(Self, Int) -> Symbols raise CodeError
+pub fn SessionPool::count(Self) -> Int32
+pub fn SessionPool::discard(Self, Int32) -> Bool
+pub fn SessionPool::ids(Self) -> Array[Int32]
+pub fn SessionPool::new(max_generations? : Int32, max_cells? : Int32, max_packets_per_generation? : Int32) -> Self raise CodeError
+pub fn SessionPool::recover(Self, Int32) -> Symbols raise CodeError
 pub fn SessionPool::reports(Self) -> Array[DecodeReport]
-pub fn SessionPool::reserved_cells(Self) -> Int
-pub fn SessionPool::take(Self, Int) -> Symbols raise CodeError
+pub fn SessionPool::reserved_cells(Self) -> Int32
+pub fn SessionPool::take(Self, Int32) -> Symbols raise CodeError
 
 pub struct Symbols {
   // private fields
 }
-pub fn Symbols::at(Self, Int) -> Int raise CodeError
-pub fn Symbols::axpy(Self, Int, Self) -> Self raise CodeError
+pub fn Symbols::at(Self, Int32) -> Int32 raise CodeError
+pub fn Symbols::axpy(Self, Int32, Self) -> Self raise CodeError
 pub fn Symbols::concat(Self, Self) -> Self raise CodeError
-pub fn Symbols::dot(Self, Self) -> Int raise CodeError
+pub fn Symbols::dot(Self, Self) -> Int32 raise CodeError
 pub fn Symbols::equal(Self, Self) -> Bool
 pub fn Symbols::from_bytes(Bytes) -> Self raise CodeError
 pub fn Symbols::is_zero(Self) -> Bool
-pub fn Symbols::length(Self) -> Int
-pub fn Symbols::new(Array[Int]) -> Self raise CodeError
-pub fn Symbols::scale(Self, Int) -> Self raise CodeError
-pub fn Symbols::slice(Self, Int, Int) -> Self raise CodeError
-pub fn Symbols::to_array(Self) -> Array[Int]
+pub fn Symbols::length(Self) -> Int32
+pub fn Symbols::new(Array[Int32]) -> Self raise CodeError
+pub fn Symbols::scale(Self, Int32) -> Self raise CodeError
+pub fn Symbols::slice(Self, Int32, Int32) -> Self raise CodeError
+pub fn Symbols::to_array(Self) -> Array[Int32]
 pub fn Symbols::to_bytes(Self) -> Bytes
 pub fn Symbols::to_hex(Self) -> String
-pub fn Symbols::zeros(Int) -> Self raise CodeError
+pub fn Symbols::zeros(Int32) -> Self raise CodeError
 
 // Type aliases
 
