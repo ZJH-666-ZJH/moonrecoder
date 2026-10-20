@@ -1,6 +1,6 @@
 ///|
 pub struct Relay {
-  decoder : Decoder
+  priv decoder : Decoder
 }
 
 ///|

@@ -1,6 +1,6 @@
 ///|
 pub struct FrameReader {
-  mut pending : Array[Int32]
+  priv mut pending : Array[Int32]
   mut byte_count : Int32
   mut frame_count : Int32
   byte_limit : Int32

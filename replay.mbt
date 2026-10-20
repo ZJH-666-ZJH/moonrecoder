@@ -71,9 +71,9 @@ pub fn ReplayEvent::to_json(self : ReplayEvent) -> String {
 
 ///|
 pub struct Replay {
-  decoder : Decoder
+  priv decoder : Decoder
   event_limit : Int32
-  event_values : Array[ReplayEvent]
+  priv event_values : Array[ReplayEvent]
   mut rejection_count : Int32
 }
 

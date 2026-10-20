@@ -1,6 +1,6 @@
 ///|
 pub struct FieldMatrix {
-  cells : Array[Symbols]
+  priv cells : Array[Symbols]
   columns : Int32
 }
 

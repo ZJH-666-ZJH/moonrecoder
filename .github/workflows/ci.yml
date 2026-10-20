@@ -46,5 +46,8 @@ jobs:
           moon run examples/telemetry --deny-warn --target ${{ matrix.target }}
           moon run examples/relay --deny-warn --target ${{ matrix.target }}
           moon run examples/trace --deny-warn --target ${{ matrix.target }}
+      - name: Public state encapsulation
+        if: matrix.target == 'wasm-gc'
+        run: python3 scripts/check_encapsulation.py
       - name: Production size guard
         run: python3 scripts/audit.py

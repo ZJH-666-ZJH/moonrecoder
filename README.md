@@ -2,14 +2,14 @@
 
 纯 MoonBit 的有界 GF(256) 随机线性网络编码内核：增量创新性判断、精确恢复、**未解码中继重编码**，以及可诊断的包追踪重放。
 
-适用于在 MoonBit 中实现丢包实验、遥测网关、仿真中继或离线抓包诊断。它是可嵌入的同步库，不包含网络传输、重传调度或加密认证。MIT；模块 `ZJH-666-ZJH/moonrecoder@0.1.0`。
+适用于在 MoonBit 中实现丢包实验、遥测网关、仿真中继或离线抓包诊断。它是可嵌入的同步库，不包含网络传输、重传调度或加密认证。MIT；模块 `ZJH-666-ZJH/moonrecoder@0.1.1`。
 
 ## 安装
 
 使用支持 `moon.mod` / `moon.pkg` 的 MoonBit 稳定工具链。在自己的模块中：
 
 ```sh
-moon add ZJH-666-ZJH/moonrecoder@0.1.0
+moon add ZJH-666-ZJH/moonrecoder@0.1.1
 ```
 
 在消费者 `moon.pkg` 中加入：
@@ -75,6 +75,7 @@ GF(256) 多项式为 `0x11d`；每代 1..64 个源符号，每符号 1..4096 字
 moon info
 moon fmt
 moon fmt --check
+python3 scripts/check_encapsulation.py
 moon check --deny-warn --target wasm-gc
 moon build --deny-warn --target wasm-gc
 moon test --deny-warn --target wasm-gc
@@ -83,7 +84,7 @@ moon run examples/relay --target wasm-gc --deny-warn
 moon run examples/trace --target wasm-gc --deny-warn
 ```
 
-把目标替换为 wasm / js / native 可复现 CI 流程。43 个测试包含所有 65536 对域乘法与独立多项式长除法 oracle 的比较、增量/批量秩一致性、255 组中继权重、全部单切点组帧、最大帧、矛盾与原子回滚。没有发布吞吐量或覆盖率保证。
+把目标替换为 wasm / js / native 可复现 CI 流程。0.1.1 有 52 个测试（历史版本 0.1.0 为 43 个）；另有公开字段封装回归脚本，逐项验证 11 个可变内部引用不能被下游直接读取。原有测试包含所有 65536 对域乘法与独立多项式长除法 oracle 的比较、增量/批量秩一致性、255 组中继权重、全部单切点组帧、最大帧、矛盾与原子回滚，以及 256 组二进制方程对的反馈补秩/分叉隔离、包与反馈的逐 bit 损坏拒绝。没有发布吞吐量或覆盖率保证。
 
 [CI](https://github.com/ZJH-666-ZJH/moonrecoder/actions/workflows/ci.yml) 使用干净 Ubuntu runner 执行四后端检查、构建、测试和三个示例。实际交付证据见 [工程审计](docs/competition/engineering-audit.md)。
 
@@ -92,3 +93,7 @@ moon run examples/trace --target wasm-gc --deny-warn
 这是原创工程实现，不是第三方库移植。运行时仅依赖 MoonBit 标准库；没有复制相邻项目源码。[参考/许可证边界](docs/provenance.md)、[AI 使用说明](AI-USE.md)、[变更记录](CHANGELOG.md)、[有界查重证据](docs/competition/duplicate-check.md)。
 
 报告问题时请提供目标后端、工具链版本、维度和最小可公开的包 trace；不要提交生产数据、认证材料或私密抓包。参赛申报材料不属于本仓库。
+
+### 0.1.1 封装修复兼容性
+
+构造器、公开方法及 MRC1/MRF1 字节格式保持不变。本版本将 11 个可变内部引用字段设为私有，防止绕过校验、资源额度和事务记账。直接读取这些内部字段的下游源码需迁移到现有访问器（如 `to_array()`、`pivots()`、`basis_equations()`）；该字段可见性收紧不是无差别源码兼容。历史 0.1.0 不会覆盖，详见 CHANGELOG。

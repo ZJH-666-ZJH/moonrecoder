@@ -1,7 +1,7 @@
 ///|
 // Immutable-by-API byte symbols. All accessors return detached copies.
 pub struct Symbols {
-  values : Array[Int32]
+  priv values : Array[Int32]
 }
 
 ///|

@@ -1,6 +1,6 @@
 ///|
 pub struct SessionPool {
-  mut sessions : Array[Decoder]
+  priv mut sessions : Array[Decoder]
   generation_limit : Int32
   cell_limit : Int32
   packet_limit : Int32

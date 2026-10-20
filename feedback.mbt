@@ -1,7 +1,7 @@
 ///|
 pub struct Feedback {
   generation_value : Generation
-  pivot_values : Array[Int32]
+  priv pivot_values : Array[Int32]
 }
 
 ///|

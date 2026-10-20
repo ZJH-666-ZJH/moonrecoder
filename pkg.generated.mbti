@@ -46,8 +46,8 @@ pub enum Admission {
 pub struct Basis {
   columns : Int
   width : Int
-  rows : Array[Equation?]
   mut rank_value : Int
+  // private fields
 }
 pub fn Basis::admit(Self, Equation) -> Admission raise CodeError
 pub fn Basis::deficit(Self) -> Int
@@ -89,10 +89,10 @@ pub fn DecodeReport::to_json(Self) -> String
 
 pub struct Decoder {
   generation_value : Generation
-  mut basis : Basis
   packet_limit : Int
   mut admitted_count : Int
   mut dependent_count : Int
+  // private fields
 }
 pub fn Decoder::admit(Self, Packet) -> Admission raise CodeError
 pub fn Decoder::admit_batch(Self, Array[Packet]) -> Array[Admission] raise CodeError
@@ -116,7 +116,7 @@ pub fn Decoder::report(Self) -> DecodeReport
 
 pub struct Encoder {
   generation_value : Generation
-  source : Array[Symbols]
+  // private fields
 }
 pub fn Encoder::coded(Self, CoefficientStream, Int) -> Packet raise CodeError
 pub fn Encoder::encode(Self, Symbols, Int) -> Packet raise CodeError
@@ -137,7 +137,7 @@ pub fn Equation::payload(Self) -> Symbols
 
 pub struct Feedback {
   generation_value : Generation
-  pivot_values : Array[Int]
+  // private fields
 }
 pub fn Feedback::deficit(Self) -> Int
 pub fn Feedback::generation(Self) -> Generation
@@ -148,8 +148,8 @@ pub fn Feedback::rank(Self) -> Int
 pub fn Feedback::to_wire(Self) -> Symbols
 
 pub struct FieldMatrix {
-  cells : Array[Symbols]
   columns : Int
+  // private fields
 }
 pub fn FieldMatrix::cols(Self) -> Int
 pub fn FieldMatrix::identity(Int) -> Self raise CodeError
@@ -162,11 +162,11 @@ pub fn FieldMatrix::to_arrays(Self) -> Array[Array[Int]]
 pub fn FieldMatrix::transpose(Self) -> Self
 
 pub struct FrameReader {
-  mut pending : Array[Int]
   mut byte_count : Int
   mut frame_count : Int
   byte_limit : Int
   frame_limit : Int
+  // private fields
 }
 pub fn FrameReader::buffered(Self) -> Int
 pub fn FrameReader::feed(Self, Symbols) -> Array[Packet] raise CodeError
@@ -206,7 +206,7 @@ pub fn Packet::wire_length(Self) -> Int
 pub fn Packet::with_sequence(Self, Int) -> Self raise CodeError
 
 pub struct Relay {
-  decoder : Decoder
+  // private fields
 }
 pub fn Relay::admit(Self, Packet) -> Admission raise CodeError
 pub fn Relay::basis_packets(Self, Int) -> Array[Packet] raise CodeError
@@ -218,10 +218,9 @@ pub fn Relay::rank(Self) -> Int
 pub fn Relay::report(Self) -> DecodeReport
 
 pub struct Replay {
-  decoder : Decoder
   event_limit : Int
-  event_values : Array[ReplayEvent]
   mut rejection_count : Int
+  // private fields
 }
 pub fn Replay::events(Self) -> Array[ReplayEvent]
 pub fn Replay::feed_hex(Self, String) -> ReplayEvent raise CodeError
@@ -246,11 +245,11 @@ pub fn ReplayEvent::status(Self) -> String
 pub fn ReplayEvent::to_json(Self) -> String
 
 pub struct SessionPool {
-  mut sessions : Array[Decoder]
   generation_limit : Int
   cell_limit : Int
   packet_limit : Int
   mut cells_used : Int
+  // private fields
 }
 pub fn SessionPool::admit(Self, Packet) -> Admission raise CodeError
 pub fn SessionPool::count(Self) -> Int
@@ -263,7 +262,7 @@ pub fn SessionPool::reserved_cells(Self) -> Int
 pub fn SessionPool::take(Self, Int) -> Symbols raise CodeError
 
 pub struct Symbols {
-  values : Array[Int]
+  // private fields
 }
 pub fn Symbols::at(Self, Int) -> Int raise CodeError
 pub fn Symbols::axpy(Self, Int, Self) -> Self raise CodeError

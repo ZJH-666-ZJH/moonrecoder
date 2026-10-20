@@ -38,7 +38,7 @@ pub enum Admission {
 pub struct Basis {
   columns : Int32
   width : Int32
-  rows : Array[Equation?]
+  priv rows : Array[Equation?]
   mut rank_value : Int32
 }
 

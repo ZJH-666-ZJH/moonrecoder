@@ -12,3 +12,14 @@ MoonRecoder is a coding and diagnostic primitive, not an authenticated transport
 - FrameReader stops at corrupt input; no resynchronization. Pool admission is separate and can fail after the reader advances.
 
 For non-sensitive correctness issues, open a minimal public GitHub issue with synthetic data and toolchain/target. Do not upload secrets, private traces or personal data. No private vulnerability-reporting address is claimed.
+
+
+## Mutable-reference isolation repair (0.1.1)
+
+Version 0.1.0 exposed 11 internal mutable reference fields. Read-only field bindings
+did not prevent downstream code from mutating the referenced arrays/objects, so a
+consumer could bypass validation, resource budgets and transaction/event counters.
+Upgrade to 0.1.1 and use the documented constructors and accessors; direct reads of
+the affected internal fields no longer compile. This is an in-process API isolation
+repair, not authentication of untrusted network packets and not a claim that older
+versions are otherwise secure. Existing wire bytes and public methods are unchanged.

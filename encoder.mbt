@@ -1,7 +1,7 @@
 ///|
 pub struct Encoder {
   generation_value : Generation
-  source : Array[Symbols]
+  priv source : Array[Symbols]
 }
 
 ///|
